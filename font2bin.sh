@@ -19,7 +19,7 @@ else
 	  echo "TARGET FONT : "$TARGETFONT
 	  echo "font2img.py $SRCFONT $TARGETFONT"
 	  mkdir -p image/$FOLDER
-	  python font2img.py --src_font=fonts/$SRCFONT --dst_font=$TARGETFONT --sample_count=2000 --sample_dir=image/$FOLDER --label=${INDEX} --filter=1
+	  poetry run font2img --src_font=fonts/$SRCFONT --dst_font=$TARGETFONT --sample_count=2000 --sample_dir=image/$FOLDER --label=${INDEX} --filter=1
 	  TARGET=$(echo $TARGETFONT | awk -F'/' '{print $(NF)}')
 	  echo "  $INDEX    $TARGET" >> mapping.log
 	  ((INDEX++))
@@ -28,7 +28,7 @@ else
     done
     echo "package.py image/$FOLDER binary/$FOLDER/data"
     mkdir -p binary/$FOLDER/data
-    python package.py --dir=image/$FOLDER --save_dir=binary/$FOLDER/data
+    poetry run package --dir=image/$FOLDER --save_dir=binary/$FOLDER/data
   else
     echo "Source font 'fonts/$1' not exist"
   fi

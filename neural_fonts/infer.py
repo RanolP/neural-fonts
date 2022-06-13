@@ -1,12 +1,9 @@
 # -*- coding: utf-8 -*-
-from __future__ import print_function
-from __future__ import absolute_import
-
 import tensorflow as tf
 import os
 import argparse
-from model.unet import UNet
-from model.utils import compile_frames_to_gif
+from neural_fonts.model.unet import UNet
+from neural_fonts.model.utils import compile_frames_to_gif
 
 """
 People are made to have fun and be 中二 sometimes

@@ -7,7 +7,8 @@ import numpy as np
 from PIL import Image
 from PIL import ImageDraw
 from PIL import ImageFont
-from model.utils import scale_back, merge, save_concat_images
+from neural_fonts.model.utils import scale_back, merge, save_concat_images
+from imp import reload
 
 reload(sys)
 sys.setdefaultencoding("utf-8")

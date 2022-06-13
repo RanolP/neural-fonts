@@ -11,7 +11,7 @@ from collections import namedtuple
 from .ops import conv2d, deconv2d, lrelu, fc, batch_norm, init_embedding, conditional_instance_norm
 from .dataset import TrainDataProvider, InjectDataProvider, NeverEndingLoopingProvider
 from .utils import scale_back, merge, save_concat_images
-from skimage.measure import compare_ssim as ssim
+from skimage.metrics import structural_similarity as ssim
 from scipy import ndimage
 from PIL import Image
 from PIL import ImageEnhance

@@ -5,7 +5,7 @@ from __future__ import absolute_import
 import tensorflow as tf
 import argparse
 
-from model.unet import UNet
+from neural_fonts.model.unet import UNet
 
 parser = argparse.ArgumentParser(description='Train')
 parser.add_argument('--experiment_dir', dest='experiment_dir', required=True,

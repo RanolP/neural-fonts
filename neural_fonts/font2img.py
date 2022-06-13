@@ -10,9 +10,9 @@ from PIL import Image
 from PIL import ImageDraw
 from PIL import ImageFont
 import collections
+from imp import reload
 
 reload(sys)
-sys.setdefaultencoding("utf-8")
 
 KR_CHARSET = None
 

@@ -4,7 +4,7 @@ from __future__ import absolute_import
 
 import tensorflow as tf
 import argparse
-from model.unet import UNet
+from neural_fonts.model.unet import UNet
 
 parser = argparse.ArgumentParser(description='Export generator weights from the checkpoint file')
 parser.add_argument('--model_dir', dest='model_dir', required=True,
