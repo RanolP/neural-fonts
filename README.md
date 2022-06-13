@@ -154,7 +154,8 @@ poetry run infer --model_dir=checkpoint_dir/
 
 ## 감사의 말
 
-[kaonashi-tyc](https://github.com/kaonashi-tyc)의 [zi2zi](https://github.com/kaonashi-tyc/zi2zi) 저장소 코드를 재구성해 파생시켰습니다.
+- [kaonashi-tyc](https://github.com/kaonashi-tyc)의 [zi2zi](https://github.com/kaonashi-tyc/zi2zi) 저장소 코드를 재구성해 파생시켰습니다.
+- [periannath](https://github.com/periannath)의 [neural-fonts](https://github.com/periannath/neural-fonts) 저장소 코드를 바탕으로 수정했습니다.
 
 ## 라이선스
 
