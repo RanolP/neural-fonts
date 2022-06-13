@@ -14,15 +14,15 @@ GAN을 사용하여 한글 폰트를 자동으로 만들어 주는 프로젝트�
 
 ### 필기체 (나눔 붓 폰트)
 
-| <p align="center">Original</p>   | <p align="center">Generated</p>  |
-| -------------------------------- | -------------------------------- |
+|             Original             |            Generated             |
+| :------------------------------: | :------------------------------: |
 | ![](assets/NanumBrush-org15.png) | ![](assets/NanumBrush-gen15.png) |
 
 ### 고딕체 (푸른전남 폰트)
 
-| <p align="center">Original</p> | <p align="center">Generated</p> |
-| ------------------------------ | ------------------------------- |
-| ![](assets/Pureun-org15.png)   | ![](assets/Pureun-gen15.png)    |
+|           Original           |          Generated           |
+| :--------------------------: | :--------------------------: |
+| ![](assets/Pureun-org15.png) | ![](assets/Pureun-gen15.png) |
 
 ## Overview
 
