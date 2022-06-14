@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 import argparse
-from PIL import Image, ImageOps, ImageFilter, ImageEnhance
+from PIL import Image, ImageEnhance
 from cv2 import bilateralFilter
 import numpy as np
 
@@ -11,7 +11,7 @@ def crop_image_uniform(src_dir, dst_dir):
     if not os.path.exists(dst_dir):
         os.makedirs(dst_dir)
     for page in range(1, 4):
-        img = Image.open(src_dir + "/" + str(page) + "-uniform.png").convert("L")
+        img = Image.open(f"{src_dir}/{page}-uniform.png").convert("L")
 
         width, height = img.size
         cell_width = width / float(cols)

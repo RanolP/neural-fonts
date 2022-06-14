@@ -1,10 +1,8 @@
 # -*- coding: utf-8 -*-
 import sys
-import numpy as np
 from PIL import Image
 from PIL import ImageDraw
 from PIL import ImageFont
-from neural_fonts.model.utils import scale_back, merge, save_concat_images
 from imp import reload
 
 reload(sys)
@@ -66,6 +64,6 @@ def select_sample(charset):
 if __name__ == "__main__":
     charset = []
     for i in range(0xAC00, 0xD7A4):
-        charset.append(unichr(i))
+        charset.append(chr(i))
     charset = select_sample(charset)
     drawChars(charset, "fonts/Gothic.ttf", char_size=256)

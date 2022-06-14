@@ -54,7 +54,7 @@ def get_font_offset(charset, font, canvas_size, filter_hashes):
     for c in sample:
         font_img = draw_single_char(c, font, canvas_size, 0, 0)
         font_hash = hash(font_img.tobytes())
-        if not font_hash in filter_hashes:
+        if font_hash not in filter_hashes:
             font_offset += get_offset(c, font, canvas_size)
             count += 1
     font_offset /= count
@@ -343,9 +343,9 @@ args = parser.parse_args()
 if __name__ == "__main__":
     charset = []
     for i in range(0xAC00, 0xD7A4):
-        charset.append(unichr(i))
+        charset.append(chr(i))
     for i in range(0x3131, 0x3164):
-        charset.append(unichr(i))
+        charset.append(chr(i))
     if args.shuffle:
         np.random.shuffle(charset)
     font2img(

@@ -17,6 +17,8 @@ opencv-python = "^4.6.0"
 
 [tool.poetry.dev-dependencies]
 black = "^22.3.0"
+flake8 = "^4.0.1"
+flake8-black = "^0.3.3"
 
 [tool.poetry.scripts]
 infer = "neural_fonts.infer:main"

@@ -5,7 +5,7 @@ import argparse
 
 from neural_fonts.model.unet import UNet
 
-parser: argparse.ArgumentParser = argparse.ArgumentParser(description="Train")
+parser = argparse.ArgumentParser(description="Train")
 parser.add_argument(
     "--experiment_dir",
     dest="experiment_dir",
