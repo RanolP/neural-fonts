@@ -26,11 +26,11 @@ GAN을 사용하여 한글 폰트를 자동으로 만들어 주는 프로젝트�
 
 ## Overview
 
-399자에 대해서만 학습할 경우 완성형 한글의 글자 수에 비해서 입력 크기가 작습니다.
+399자에 대해서만 훈련할 경우 완성형 한글의 글자 수에 비해서 입력 크기가 작습니다.
 
-이를 해결하기 위해 먼저 다양한 한글 글꼴을 학습한 모델을 생성합니다.
+이를 해결하기 위해 먼저 다양한 한글 글꼴로 훈련한 모델을 만듭니다.
 
-생성된 모델에 전이 학습을 통해 399자를 학습하고 이를 사용하여 글꼴을 생성합니다.
+생성된 모델에 전이 학습을 통해 399자를 훈련하고 이를 사용하여 글꼴을 생성합니다.
 
 ## 사용법
 
@@ -40,17 +40,17 @@ GAN을 사용하여 한글 폰트를 자동으로 만들어 주는 프로젝트�
 - cudnn
 - poetry
 
-### 미리 학습한 모델을 내려받거나 직접 학습하기
+### 미리 훈련한 모델을 내려받거나 직접 훈련하기
 
-먼저 한글 글꼴에 대해서 학습된 모델을 생성합니다.
+먼저 한글 글꼴에 대해서 훈련한 모델을 생성합니다.
 
-32개의 copyleft 글꼴에 대하여 미리 학습한 모델을 내려받아 쓰거나 원하는 글꼴을 사용해 직접 학습할 수도 있습니다.
+32개의 copyleft 글꼴에 대하여 미리 훈련한 모델을 내려받아 쓰거나 원하는 글꼴을 사용해 직접 훈련할 수도 있습니다.
 
-> [미리 학습한 모델 내려받기](https://mysnu-my.sharepoint.com/personal/yu65789_seoul_ac_kr/_layouts/15/guestaccess.aspx?docid=0a7fcfabb78af4958b790b98eccac135c&authkey=AVqeaI5jyQHWyklZgotc04Y) (링크 만료됨)
+> [미리 훈련한 모델 내려받기](https://mysnu-my.sharepoint.com/personal/yu65789_seoul_ac_kr/_layouts/15/guestaccess.aspx?docid=0a7fcfabb78af4958b790b98eccac135c&authkey=AVqeaI5jyQHWyklZgotc04Y) (링크 만료됨)
 
-새로 학습할 경우 [zi2zi](https://github.com/kaonashi-tyc/zi2zi)의 README를 참조하여 학습하면 됩니다.
+새로 훈련할 경우 [zi2zi](https://github.com/kaonashi-tyc/zi2zi)의 README를 참조하여 훈련하면 됩니다.
 
-### 학습 데이터 생성
+### 훈련 데이터 생성
 
 먼저 [폰트 템플릿](template/TemplateKR.pdf)을 내려받아서 인쇄한 후, 칸에 맞춰 글씨를 씁니다.
 
@@ -71,7 +71,7 @@ poetry run crop --src_dir=src_dir
 
 I/O 병목을 막기 위해서 전처리를 거쳐 바이너리를 생성한 다음 사용합니다.
 
-아래 명령어를 실행하여 source 글꼴과 손글씨가 합쳐진 학습용 글꼴 이미지를 생성합니다.
+아래 명령어를 실행하여 source 글꼴과 손글씨가 합쳐진 훈련용 글꼴 이미지를 생성합니다.
 
 ```sh
 poetry run font2img --src_font=src.ttf
@@ -82,9 +82,9 @@ poetry run font2img --src_font=src.ttf
                    --handwriting_dir=handwriting_dir
 ```
 
-`sample_dir`은 학습을 위한 글꼴 이미지가 저장 될 폴더입니다.
-`handwriting_dir` 옵셔을 사용해 템플릿으로 생성한 폰트 이미지 폴더를 알려줍니다.
-`label` 옵션은 category embedding에서의 font index를 나타내며 기본값은 0입니다. 여러개의 폰트를 학습하고 싶은 경우 각각의 폰트에 다른 `label`을 할당하면 됩니다.
+`sample_dir`은 훈련을 위한 글꼴 이미지를 저장할 폴더입니다.
+`handwriting_dir` 옵션을 사용해 템플릿으로 생성한 폰트 이미지 폴더를 알려줍니다.
+`label` 옵션은 category embedding에서의 font index를 나타내며 기본값은 0입니다. 여러개의 폰트를 훈련하고 싶은 경우 각각의 폰트에 다른 `label`을 할당하면 됩니다.
 
 이미지 생성이 완료되면 **package.py**를 실행해 이미지를 묶어 바이너리 형식으로 만듭니다.
 
@@ -106,11 +106,11 @@ experiment/
 
 루트 폴더 밑에 폰트를 위한 폴더를 생성한 다음 앞에서 생성한 바이너리 파일을 `data` 폴더 밑으로 옮깁니다.
 
-### 학습
+### 훈련
 
-학습은 두 단계로 진행되는데, 먼저 학습 단계가 진행되고, 그 다음으로 파인 튜닝 단계가 진행됩니다.
+훈련은 두 단계로 진행되는데, 1차 훈련 단계가 진행되고, 그 다음으로 파인 튜닝 단계가 진행됩니다.
 
-아래의 명령어를 실행하여 학습을 수행합니다.
+아래의 명령어를 실행하여 훈련을 수행합니다.
 
 #### 1단계
 
@@ -126,7 +126,7 @@ poetry run train --experiment_dir=experiment
                 --Lconst_penalty=15
 ```
 
-#### 2단계
+#### 2단을
 
 ```sh
 poetry run train --experiment_dir=experiment 
@@ -142,7 +142,7 @@ poetry run train --experiment_dir=experiment
 
 ### 추론
 
-학습이 끝난 후 아래 명령어를 통해 추론을 수행합니다.
+훈련이 끝난 후 아래 명령어를 통해 추론을 수행합니다.
 
 ```sh
 poetry run infer --model_dir=checkpoint_dir/ 
