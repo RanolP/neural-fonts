@@ -1,19 +1,23 @@
 # -*- coding: utf-8 -*-
-import pickle
-import numpy as np
-import random
 import os
+import pickle
+import random
+
+import numpy as np
+
 from neural_fonts.model.utils import (
-    pad_seq,
     bytes_to_file,
+    normalize_image,
+    pad_seq,
     read_split_image,
     shift_and_resize_image,
-    normalize_image,
 )
 
 
-class PickledImageProvider(object):
-    def __init__(self, obj_path):
+class PickledImageProvider:
+    def __init__(
+        self, obj_path: str | bytes | os.PathLike[str] | os.PathLike[bytes] | int
+    ):
         self.obj_path = obj_path
         self.examples = self.load_pickled_examples()
 
@@ -77,7 +81,7 @@ def get_batch_iter(examples, batch_size, augment):
     return batch_iter()
 
 
-class TrainDataProvider(object):
+class TrainDataProvider:
     def __init__(
         self,
         data_dir,
@@ -140,7 +144,7 @@ class TrainDataProvider(object):
         return self.train_path, self.val_path
 
 
-class InjectDataProvider(object):
+class InjectDataProvider:
     def __init__(self, obj_path, filter_by=None):
         self.filter_by = filter_by
         self.data = PickledImageProvider(obj_path)

@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 
-import tensorflow as tf
 import argparse
+
+import tensorflow as tf
+
 from neural_fonts.model.unet import UNet
 
 parser = argparse.ArgumentParser(

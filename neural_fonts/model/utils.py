@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
-import os
 import glob
+import os
+from io import StringIO
 
 import imageio
-import scipy.misc as misc
 import numpy as np
-from io import StringIO
+import scipy.misc as misc
 
 
 def pad_seq(seq, batch_size):

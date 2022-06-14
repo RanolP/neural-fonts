@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 
 import argparse
-import sys
-import numpy as np
-import os
-from PIL import Image, ImageDraw, ImageFont
 import collections
+import os
+import sys
 from imp import reload
+
+import numpy as np
+from PIL import Image, ImageDraw, ImageFont
 
 reload(sys)
 

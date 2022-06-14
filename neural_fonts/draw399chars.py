@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 import sys
-from PIL import Image
-from PIL import ImageDraw
-from PIL import ImageFont
 from imp import reload
+
+from PIL import Image, ImageDraw, ImageFont
 
 reload(sys)
 sys.setdefaultencoding("utf-8")

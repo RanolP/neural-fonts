@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
-import tensorflow as tf
-import os
 import argparse
+import os
+
+import tensorflow as tf
+
 from neural_fonts.model.unet import UNet
 from neural_fonts.model.utils import compile_frames_to_gif
 

@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
-import os
 import argparse
-from PIL import Image, ImageEnhance
-from cv2 import bilateralFilter
+import os
+
 import numpy as np
+from cv2 import bilateralFilter
+from PIL import Image, ImageEnhance
 
 
 def crop_image_uniform(src_dir, dst_dir):

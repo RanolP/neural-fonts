@@ -1,27 +1,26 @@
 # -*- coding: utf-8 -*-
-import tensorflow as tf
-import numpy as np
-import scipy.misc as misc
 import os
 import time
 from collections import namedtuple
+
+import numpy as np
+import scipy.misc as misc
+import tensorflow as tf
+from cv2 import bilateralFilter
+from PIL import Image, ImageEnhance
+from skimage.metrics import structural_similarity as ssim
+
+from neural_fonts.model.dataset import InjectDataProvider, TrainDataProvider
 from neural_fonts.model.ops import (
+    batch_norm,
+    conditional_instance_norm,
     conv2d,
     deconv2d,
-    lrelu,
     fc,
-    batch_norm,
     init_embedding,
-    conditional_instance_norm,
+    lrelu,
 )
-from neural_fonts.model.dataset import (
-    TrainDataProvider,
-    InjectDataProvider,
-)
-from neural_fonts.model.utils import scale_back, merge, save_concat_images
-from skimage.metrics import structural_similarity as ssim
-from PIL import Image, ImageEnhance
-from cv2 import bilateralFilter
+from neural_fonts.model.utils import merge, save_concat_images, scale_back
 
 # Auxiliary wrapper classes
 # Used to save handles(important nodes in computation graph) for later evaluation
