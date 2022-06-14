@@ -1,7 +1,4 @@
 # -*- coding: utf-8 -*-
-from __future__ import print_function
-from __future__ import absolute_import
-
 import os
 import glob
 
@@ -29,7 +26,7 @@ def normalize_image(img):
     """
     Make image zero centered and in between (-1, 1)
     """
-    normalized = (img / 127.5) - 1.
+    normalized = (img / 127.5) - 1.0
     return normalized
 
 
@@ -44,14 +41,14 @@ def read_split_image(img):
 
 
 def shift_and_resize_image(img, shift_x, shift_y, nw, nh):
-#    w, h, _ = img.shape
+    #    w, h, _ = img.shape
     w, h = img.shape
     enlarged = misc.imresize(img, [nw, nh])
-    return enlarged[shift_x:shift_x + w, shift_y:shift_y + h]
+    return enlarged[shift_x : shift_x + w, shift_y : shift_y + h]
 
 
 def scale_back(images):
-    return (images + 1.) / 2.
+    return (images + 1.0) / 2.0
 
 
 def merge(images, size):
@@ -60,7 +57,7 @@ def merge(images, size):
     for idx, image in enumerate(images):
         i = idx % size[1]
         j = idx // size[1]
-        img[j * h:j * h + h, i * w:i * w + w, :] = image
+        img[j * h : j * h + h, i * w : i * w + w, :] = image
 
     return img
 
@@ -73,6 +70,8 @@ def save_concat_images(imgs, img_path):
 def compile_frames_to_gif(frame_dir, gif_file):
     frames = sorted(glob.glob(os.path.join(frame_dir, "*.png")))
     print(frames)
-    images = [misc.imresize(imageio.imread(f), interp='nearest', size=0.33) for f in frames]
+    images = [
+        misc.imresize(imageio.imread(f), interp="nearest", size=0.33) for f in frames
+    ]
     imageio.mimsave(gif_file, images, duration=0.1)
     return gif_file

@@ -16,6 +16,7 @@ scikit-image = "^0.19.3"
 opencv-python = "^4.6.0"
 
 [tool.poetry.dev-dependencies]
+black = "^22.3.0"
 
 [tool.poetry.scripts]
 infer = "neural_fonts.infer:main"

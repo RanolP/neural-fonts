@@ -1,12 +1,15 @@
 # -*- coding: utf-8 -*-
-from __future__ import print_function
-from __future__ import absolute_import
 import pickle
 import numpy as np
 import random
 import os
-from .utils import pad_seq, bytes_to_file, \
-    read_split_image, shift_and_resize_image, normalize_image
+from .utils import (
+    pad_seq,
+    bytes_to_file,
+    read_split_image,
+    shift_and_resize_image,
+    normalize_image,
+)
 
 
 class PickledImageProvider(object):
@@ -46,7 +49,7 @@ def get_batch_iter(examples, batch_size, augment):
                 # 2) random crop the image back to its original size
                 # NOTE: image A and B needs to be in sync as how much
                 # to be shifted
-#                w, h, _ = img_A.shape
+                #                w, h, _ = img_A.shape
                 w, h = img_A.shape
                 multiplier = random.uniform(1.00, 1.20)
                 # add an eps to prevent cropping issue
@@ -56,15 +59,15 @@ def get_batch_iter(examples, batch_size, augment):
                 shift_y = int(np.ceil(np.random.uniform(0.01, nh - h)))
                 img_A = shift_and_resize_image(img_A, shift_x, shift_y, nw, nh)
                 img_B = shift_and_resize_image(img_B, shift_x, shift_y, nw, nh)
-            img_A = normalize_image(img_A).reshape((128,128,1))
-            img_B = normalize_image(img_B).reshape((128,128,1))
+            img_A = normalize_image(img_A).reshape((128, 128, 1))
+            img_B = normalize_image(img_B).reshape((128, 128, 1))
             return np.concatenate((img_A, img_B), axis=2)
         finally:
             img.close()
 
     def batch_iter():
         for i in range(0, len(padded), batch_size):
-            batch = padded[i: i + batch_size]
+            batch = padded[i : i + batch_size]
             labels = [e[0] for e in batch]
             codes = [e[1] for e in batch]
             processed = [process(e[2]) for e in batch]
@@ -75,7 +78,14 @@ def get_batch_iter(examples, batch_size, augment):
 
 
 class TrainDataProvider(object):
-    def __init__(self, data_dir, train_name="train.obj", val_name="val.obj", filter_by=None, no_val=False):
+    def __init__(
+        self,
+        data_dir,
+        train_name="train.obj",
+        val_name="val.obj",
+        filter_by=None,
+        no_val=False,
+    ):
         self.data_dir = data_dir
         self.filter_by = filter_by
         self.train_path = os.path.join(self.data_dir, train_name)
@@ -85,11 +95,18 @@ class TrainDataProvider(object):
             self.val = PickledImageProvider(self.val_path)
         if self.filter_by:
             print("filter by label ->", filter_by)
-            self.train.examples = filter(lambda e: e[0] in self.filter_by, self.train.examples)
+            self.train.examples = filter(
+                lambda e: e[0] in self.filter_by, self.train.examples
+            )
             if not no_val:
-                self.val.examples = filter(lambda e: e[0] in self.filter_by, self.val.examples)
+                self.val.examples = filter(
+                    lambda e: e[0] in self.filter_by, self.val.examples
+                )
         if not no_val:
-            print("train examples -> %d, val examples -> %d" % (len(self.train.examples), len(self.val.examples)))
+            print(
+                "train examples -> %d, val examples -> %d"
+                % (len(self.train.examples), len(self.val.examples))
+            )
         else:
             print("train examples -> %d" % (len(self.train.examples)))
 
@@ -129,7 +146,9 @@ class InjectDataProvider(object):
         self.data = PickledImageProvider(obj_path)
         if self.filter_by:
             print("filter by label ->", filter_by)
-            self.data.examples = filter(lambda e: e[0] in self.filter_by, self.data.examples)
+            self.data.examples = filter(
+                lambda e: e[0] in self.filter_by, self.data.examples
+            )
         print("examples -> %d" % len(self.data.examples))
 
     def get_single_embedding_iter(self, batch_size, embedding_id):
@@ -156,7 +175,8 @@ class NeverEndingLoopingProvider(InjectDataProvider):
     def get_random_embedding_iter(self, batch_size, embedding_ids):
         while True:
             # np.random.shuffle(self.data.examples)
-            rand_iter = super(NeverEndingLoopingProvider, self) \
-                .get_random_embedding_iter(batch_size, embedding_ids)
+            rand_iter = super(
+                NeverEndingLoopingProvider, self
+            ).get_random_embedding_iter(batch_size, embedding_ids)
             for labels, codes, images in rand_iter:
                 yield labels, codes, images
