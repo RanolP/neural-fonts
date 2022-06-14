@@ -37,7 +37,7 @@ GAN을 사용하여 한글 폰트를 자동으로 만들어 주는 프로젝트�
 ### 요구 사항
 
 - CUDA
-- cudnn
+- [cudnn](https://developer.nvidia.com/cudnn)
 - poetry
 
 ### 미리 훈련한 모델을 내려받거나 직접 훈련하기
