@@ -44,7 +44,7 @@ EvalHandle = namedtuple(
 SummaryHandle = namedtuple("SummaryHandle", ["d_merged", "g_merged"])
 
 
-class UNet(object):
+class UNet:
     def __init__(
         self,
         experiment_dir=None,
