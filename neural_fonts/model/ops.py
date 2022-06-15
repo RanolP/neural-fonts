@@ -54,6 +54,9 @@ def deconv2d(x, output_shape, kh=5, kw=5, sh=2, sw=2, stddev=0.02, scope="deconv
 
 
 def lrelu(x, leak=0.2):
+    """
+    A Leaky ReLU implementation
+    """
     return tf.maximum(x, leak * x)
 
 
