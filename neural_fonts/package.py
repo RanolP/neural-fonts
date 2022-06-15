@@ -1,12 +1,17 @@
-import argparse
 import glob
 import os
 import pickle
 import random
 
+import click
+
 
 def pickle_examples(
-    paths, train_path, val_path, train_val_split=0.1, fixed_sample=False
+    paths,
+    train_path: str,
+    val_path: str,
+    train_val_split: float = 0.1,
+    fixed_sample: bool = False,
 ):
     """
     Compile a list of examples into pickled format, so during
@@ -46,39 +51,53 @@ def pickle_examples(
                         pickle.dump(example, ft)
 
 
-parser = argparse.ArgumentParser(
-    description="Compile list of images into a pickled object for training"
+@click.command()
+@click.option(
+    "--dir",
+    type=click.Path(exists=True, file_okay=False, resolve_path=True),
+    required=True,
+    help="path of examples",
 )
-parser.add_argument("--dir", dest="dir", required=True, help="path of examples")
-parser.add_argument(
-    "--save_dir", dest="save_dir", required=True, help="path to save pickled files"
+@click.option(
+    "--save-dir", type=click.Path(), required=True, help="path to save pickled files"
 )
-parser.add_argument(
-    "--split_ratio",
-    type=float,
-    default=0.1,
-    dest="split_ratio",
-    help="split ratio between train and val",
+@click.option(
+    "--split-ratio", type=float, default=0.1, help="split ratio between train and val"
 )
-parser.add_argument(
-    "--fixed_sample",
-    dest="fixed_sample",
-    default=0,
-    help="binarize fixed samples (we distiguish train/validation data with its file name).",
+@click.option(
+    "--fixed-sample",
+    type=bool,
+    default=False,
+    help="binarize fixed samples (we distinguish train/validation data with its filename).",
 )
-args = parser.parse_args()
-
-if __name__ == "__main__":
-    if not os.path.exists(args.save_dir):
-        os.makedirs(args.save_dir)
-    train_path = os.path.join(args.save_dir, "train.obj")
-    val_path = os.path.join(args.save_dir, "val.obj")
+def main(dir: str, save_dir: str, split_ratio: float, fixed_sample: bool):
+    """
+    Compile list of images into a pickled object for training
+    """
+    if not os.path.exists(save_dir):
+        os.makedirs(save_dir)
+    train_path = os.path.join(save_dir, "train.obj")
+    val_path = os.path.join(save_dir, "val.obj")
     pickle_examples(
-        glob.glob(os.path.join(args.dir, "*.png")),
+        glob.glob(os.path.join(dir, "*.png")),
         train_path=train_path,
         val_path=val_path,
-        train_val_split=args.split_ratio,
-        fixed_sample=args.fixed_sample,
+        train_val_split=split_ratio,
+        fixed_sample=fixed_sample,
     )
-#    pickle_examples(sorted(glob.glob(os.path.join(args.dir, "*.png")), key=lambda e: float(os.path.splitext(os.path.basename(e))[0].replace("_","").replace("train","").replace("val",""))), train_path=train_path, val_path=val_path,
-#                    train_val_split=args.split_ratio, fixed_sample=args.fixed_sample)
+
+    """ pickle_examples(
+        sorted(
+            glob.glob(os.path.join(dir, "*.png")),
+            key=lambda e: float(
+                os.path.splitext(os.path.basename(e))[0]
+                .replace("_", "")
+                .replace("train", "")
+                .replace("val", "")
+            ),
+        ),
+        train_path=train_path,
+        val_path=val_path,
+        train_val_split=split_ratio,
+        fixed_sample=fixed_sample,
+    ) """
