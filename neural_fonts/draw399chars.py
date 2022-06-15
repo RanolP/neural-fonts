@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import sys
 from imp import reload
 
