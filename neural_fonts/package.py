@@ -7,12 +7,12 @@ import click
 
 
 def pickle_examples(
-    paths,
+    paths: list[str],
     train_path: str,
     val_path: str,
     train_val_split: float = 0.1,
     fixed_sample: bool = False,
-):
+) -> None:
     """
     Compile a list of examples into pickled format, so during
     the training, all io will happen in memory
@@ -24,16 +24,16 @@ def pickle_examples(
                     label = int(os.path.basename(p).split("_")[0])
                     uni = os.path.basename(p).split("_")[1]
                     with open(p, "rb") as f:
-                        #                        print("img %s" % p, label)
-                        img_bytes = f.read()
-                        example = (label, uni, img_bytes)
+                        # print(f"img {p}", label)
+                        image_bytes = f.read()
+                        example = (label, uni, image_bytes)
                         if "val" in p:
-                            #                            print("img %s is saved in val.obj" % p)
                             # validation set
+                            # print(f"img {p} is saved in val.obj")
                             pickle.dump(example, fv)
                         else:
                             # training set
-                            #                            print("img %s is saved in train.obj" % p)
+                            # print(f"img {p} is saved in train.obj")
                             pickle.dump(example, ft)
                 return
     with open(train_path, "wb") as ft:
@@ -42,9 +42,9 @@ def pickle_examples(
                 label = int(os.path.basename(p).split("_")[0])
                 with open(p, "rb") as f:
                     print("img %s" % p, label)
-                    img_bytes = f.read()
+                    image_bytes = f.read()
                     r = random.random()
-                    example = (label, img_bytes)
+                    example = (label, image_bytes)
                     if r < train_val_split:
                         pickle.dump(example, fv)
                     else:
@@ -70,7 +70,7 @@ def pickle_examples(
     default=False,
     help="binarize fixed samples (we distinguish train/validation data with its filename).",
 )
-def main(dir: str, save_dir: str, split_ratio: float, fixed_sample: bool):
+def main(dir: str, save_dir: str, split_ratio: float, fixed_sample: bool) -> None:
     """
     Compile list of images into a pickled object for training
     """
