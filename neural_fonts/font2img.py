@@ -1,16 +1,15 @@
 import collections
 import os
-import click
+from typing import TYPE_CHECKING
 
+import click
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont
-
-from typing import TYPE_CHECKING
 
 KR_CHARSET = None
 
 if TYPE_CHECKING:
-    from typing import Tuple, Literal, TypeVar
+    from typing import Literal, Tuple, TypeVar
 
 
 def get_offset(
