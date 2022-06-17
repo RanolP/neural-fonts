@@ -43,6 +43,9 @@ format = "black neural_fonts"
 profile = "black"
 
 [tool.pyright]
+include = ["neural_fonts"]
+strict = ["neural_fonts"]
+reportMissingTypeStubs = true
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
