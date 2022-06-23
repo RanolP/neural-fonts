@@ -35,7 +35,8 @@ crop = "neural_fonts.crop:main"
 font2img = "neural_fonts.font2img:main"
 
 [tool.poe.tasks]
-format = "black neural_fonts"
+"format:black" = "black neural_fonts"
+"format:isort" = "isort ."
 "check:flake8" = "flake8 neural_fonts"
 "check:pyright" = "pyright"
 
