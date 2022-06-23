@@ -1,5 +1,7 @@
 # neural-fonts - GAN을 활용한 한글 폰트 제작 프로젝트
 
+> 현재 이 저장소의 코드는 대부분 작동하지 않습니다.
+
 <p align="center">
   <img src="assets/NanumBrush-gen15.png">
 </p>
@@ -62,7 +64,7 @@ GAN을 사용하여 한글 폰트를 자동으로 만들어 주는 프로젝트�
 
 ```sh
 poetry run crop --src_dir=src_dir
-               --dst_dir=dst_dir
+                --dst_dir=dst_dir
 ```
 
 `dst_dir`에 각 글자의 유니코드 값을 이름으로 하는 폰트 이미지 파일이 생성됩니다.
@@ -75,11 +77,11 @@ I/O 병목을 막기 위해서 전처리를 거쳐 바이너리를 생성한 다
 
 ```sh
 poetry run font2img --src_font=src.ttf
-                   --dst_font=src.ttf
-                   --sample_count=1000
-                   --sample_dir=sample_dir
-                   --label=0
-                   --handwriting_dir=handwriting_dir
+                    --dst_font=src.ttf
+                    --sample_count=1000
+                    --sample_dir=sample_dir
+                    --label=0
+                    --handwriting_dir=handwriting_dir
 ```
 
 `sample_dir`은 훈련을 위한 글꼴 이미지를 저장할 폴더입니다.
@@ -90,8 +92,8 @@ poetry run font2img --src_font=src.ttf
 
 ```sh
 poetry run package --fixed_sample=1
-                  --dir=image_directory
-                  --save_dir=binary_save_directory
+                   --dir=image_directory
+                   --save_dir=binary_save_directory
 ```
 
 명령어를 실행하면 **train.obj**가 `save_dir`에 생성됩니다. 해당 파일이 training을 위해 사용되는 data입니다.
@@ -99,8 +101,8 @@ poetry run package --fixed_sample=1
 ### 연구 레이아웃
 
 ```sh
-experiment/
-└── data
+📂 experiment
+└── 📂 data
     └── train.obj
 ```
 
@@ -116,28 +118,28 @@ experiment/
 
 ```sh
 poetry run train --experiment_dir=experiment 
-                --experiment_id=0
-                --batch_size=16 
-                --lr=0.001
-                --epoch=30 
-                --sample_steps=100 
-                --schedule=10 
-                --L1_penalty=100 
-                --Lconst_penalty=15
+                 --experiment_id=0
+                 --batch_size=16 
+                 --lr=0.001
+                 --epoch=30 
+                 --sample_steps=100 
+                 --schedule=10 
+                 --L1_penalty=100 
+                 --Lconst_penalty=15
 ```
 
-#### 2단을
+#### 2단계
 
 ```sh
 poetry run train --experiment_dir=experiment 
-                --experiment_id=0
-                --batch_size=16 
-                --lr=0.001
-                --epoch=120 
-                --sample_steps=100 
-                --schedule=40 
-                --L1_penalty=500 
-                --Lconst_penalty=1000
+                 --experiment_id=0
+                 --batch_size=16 
+                 --lr=0.001
+                 --epoch=120 
+                 --sample_steps=100 
+                 --schedule=40 
+                 --L1_penalty=500 
+                 --Lconst_penalty=1000
 ```
 
 ### 추론
@@ -146,10 +148,10 @@ poetry run train --experiment_dir=experiment
 
 ```sh
 poetry run infer --model_dir=checkpoint_dir/ 
-                --batch_size=16 
-                --source_obj=binary_obj_path 
-                --embedding_ids=label[s] of the font, separate by comma
-                --save_dir=save_dir/
+                 --batch_size=16 
+                 --source_obj=binary_obj_path 
+                 --embedding_ids=label[s] of the font, separate by comma
+                 --save_dir=save_dir/
 ```
 
 ## 감사의 말
