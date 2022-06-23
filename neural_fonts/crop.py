@@ -1,27 +1,31 @@
-import argparse
 import os
 
+import click
 import numpy as np
 from cv2 import bilateralFilter
 from PIL import Image, ImageEnhance
 
+ROWS = 12
+COLS = 12
+HEADER_RATIO = 16.5 / (16.5 + 42)
 
-def crop_image_uniform(src_dir, dst_dir):
+
+def crop_image_uniform(src_dir: str, dst_dir: str):
     f = open("399-uniform.txt", "r")
-    if not os.path.exists(dst_dir):
-        os.makedirs(dst_dir)
+    os.makedirs(dst_dir, exist_ok=True)
+
     for page in range(1, 4):
         img = Image.open(f"{src_dir}/{page}-uniform.png").convert("L")
 
         width, height = img.size
-        cell_width = width / float(cols)
-        cell_height = height / float(rows)
-        header_offset = height / float(rows) * header_ratio
+        cell_width = width / float(COLS)
+        cell_height = height / float(ROWS)
+        header_offset = height / float(ROWS) * HEADER_RATIO
         width_margin = cell_width * 0.10
         height_margin = cell_height * 0.10
 
-        for j in range(0, rows):
-            for i in range(0, cols):
+        for j in range(0, ROWS):
+            for i in range(0, COLS):
                 left = i * cell_width
                 upper = j * cell_height + header_offset
                 right = left + cell_width
@@ -61,22 +65,22 @@ def crop_image_uniform(src_dir, dst_dir):
         print("Processed uniform page " + str(page))
 
 
-parser = argparse.ArgumentParser(description="Crop scanned images to character images")
-parser.add_argument(
-    "--src_dir", dest="src_dir", required=True, help="directory to read scanned images"
+@click.command()
+@click.option(
+    "--src-dir",
+    type=click.Path(),
+    required=True,
+    help="directory to read scanned images",
 )
-parser.add_argument(
-    "--dst_dir",
-    dest="dst_dir",
+@click.option(
+    "--dst-dir",
+    type=click.Path(),
     required=True,
     help="directory to save character images",
 )
-
-args = parser.parse_args()
-
-if __name__ == "__main__":
-    rows = 12
-    cols = 12
-    header_ratio = 16.5 / (16.5 + 42)
-    crop_image_uniform(args.src_dir, args.dst_dir)
-#    crop_image_frequency(args.src_dir, args.dst_dir)
+def main(src_dir: str, dst_dir: str):
+    """
+    Crop scanned images to character images
+    """
+    crop_image_uniform(src_dir, dst_dir)
+    # crop_image_frequency(args.src_dir, args.dst_dir)
